@@ -6,6 +6,11 @@ doctrine:
         # either here or in the DATABASE_URL env var (see .env file)
         #server_version: '16'
 
+        # Supabase : ne gérer que le schéma public (noms non qualifiés). Les schémas
+        # auth, storage, realtime… appartiennent à Supabase et contiennent des types
+        # que DBAL ne sait pas introspecter (_text).
+        schema_filter: '~^[^.]+$~'
+
         profiling_collect_backtrace: '%kernel.debug%'
     orm:
         validate_xml_mapping: true
