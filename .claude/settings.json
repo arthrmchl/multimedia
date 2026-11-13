@@ -1,0 +1,76 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(symfony console:*)",
+      "Bash(bin/console debug:*)",
+      "Bash(bin/console lint:*)",
+      "Bash(php bin/console debug:*)",
+      "Bash(php bin/console lint:*)",
+      "Bash(vendor/bin/phpunit:*)",
+      "Bash(vendor/bin/phpstan:*)",
+      "Bash(vendor/bin/php-cs-fixer:*)",
+      "Bash(vendor/bin/twig-cs-fixer:*)",
+      "Bash(vendor/bin/rector:*)",
+      "Bash(composer audit:*)",
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(composer validate:*)",
+      "Bash(composer show:*)"
+    ],
+    "deny": [
+      "Read(./.env.local)",
+      "Read(./.env.*.local)",
+      "Read(./config/secrets/prod/**)",
+      "Bash(cat .env.local*)",
+      "Bash(cat .env.*.local*)",
+      "Edit(./config/secrets/**)",
+      "Bash(symfony console doctrine:schema:update:*)",
+      "Bash(symfony console doctrine:database:drop:*)",
+      "Bash(symfony console doctrine:schema:drop:*)",
+      "Bash(git push --force:*)",
+      "Bash(git push -f:*)",
+      "Bash(rm -rf:*)",
+      "Bash(php bin/console doctrine:schema:update:*)",
+      "Bash(php bin/console doctrine:schema:drop:*)",
+      "Bash(php bin/console doctrine:database:drop:*)",
+      "Bash(bin/console doctrine:schema:update:*)",
+      "Bash(bin/console doctrine:schema:drop:*)",
+      "Bash(bin/console doctrine:database:drop:*)",
+      "Bash(symfony console debug:dotenv:*)",
+      "Bash(symfony console secrets:reveal:*)",
+      "Bash(symfony console secrets:list --reveal:*)",
+      "Bash(symfony console secrets:decrypt-to-local:*)",
+      "Bash(php bin/console debug:dotenv:*)",
+      "Bash(php bin/console secrets:reveal:*)",
+      "Bash(php bin/console secrets:list --reveal:*)",
+      "Bash(php bin/console secrets:decrypt-to-local:*)",
+      "Bash(bin/console debug:dotenv:*)",
+      "Bash(bin/console secrets:reveal:*)",
+      "Bash(bin/console secrets:list --reveal:*)",
+      "Bash(bin/console secrets:decrypt-to-local:*)"
+    ],
+    "ask": [
+      "Bash(git push:*)",
+      "Bash(composer require:*)",
+      "Bash(composer remove:*)",
+      "Bash(symfony console doctrine:migrations:migrate:*)",
+      "Bash(php bin/console doctrine:migrations:migrate:*)",
+      "Bash(bin/console doctrine:migrations:migrate:*)"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/quality-check.sh",
+            "timeout": 120
+          }
+        ]
+      }
+    ]
+  }
+}
