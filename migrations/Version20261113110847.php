@@ -34,7 +34,8 @@ final class Version20261113110847 extends AbstractMigration
 
     public function down(Schema $schema): void
     {
-        $this->addSql('ALTER TABLE doctrine_migration_versions DISABLE ROW LEVEL SECURITY');
+        // Le RLS reste actif sur doctrine_migration_versions : la table survit au down()
+        // et redeviendrait sinon lisible par l'API PostgREST de Supabase.
         $this->addSql('DROP TABLE messenger_messages');
     }
 }
